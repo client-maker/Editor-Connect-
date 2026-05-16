@@ -1,231 +1,757 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>EditorConnect | Elite Glass UI</title>
-    
-    <!-- Scripts & Fonts -->
+
+    <!-- Tailwind -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Cloudinary -->
+
+    <script src="https://upload-widget.cloudinary.com/global/all.js"
+        type="text/javascript"></script>
+
+    <!-- Animations -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- Font -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
+        rel="stylesheet">
 
     <style>
-        :root { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        body { 
+        :root {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+
             background: #020617;
-            color: white; 
+
+            color: white;
+
             min-height: 100vh;
+
             overflow-x: hidden;
+
         }
 
-        /* Animated Mesh Background */
         .mesh-bg {
+
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(147, 51, 234, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(147, 51, 234, 0.1) 0px, transparent 50%);
+
+            inset: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background:
+                radial-gradient(at 0% 0%, rgba(59,130,246,0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(147,51,234,0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59,130,246,0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(147,51,234,0.1) 0px, transparent 50%);
+
             z-index: -1;
+
         }
 
-        /* Advanced Glassmorphism */
         .glass {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+            background: rgba(255,255,255,0.03);
+
+            backdrop-filter: blur(20px) saturate(180%);
+
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+
+            transition: 0.4s ease;
+
         }
 
         .glass:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(59, 130, 246, 0.4);
+
             transform: translateY(-6px);
+
+            border-color: rgba(59,130,246,0.4);
+
+            background: rgba(255,255,255,0.05);
+
         }
 
         .filter-btn {
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            transition: 0.3s ease;
+
+            background: rgba(255,255,255,0.05);
+
+            border: 1px solid rgba(255,255,255,0.1);
+
         }
 
         .filter-btn.active {
+
             background: #2563eb;
+
             border-color: #60a5fa;
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+
+            box-shadow: 0 0 20px rgba(37,99,235,0.3);
+
         }
 
-        input, select {
-            background: rgba(0, 0, 0, 0.2) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            color: white;
+        input,
+        select {
+
+            background: rgba(0,0,0,0.25) !important;
+
+            border: 1px solid rgba(255,255,255,0.08) !important;
+
+            color: white !important;
+
         }
 
-        /* Video Glow Effect */
         .video-container::after {
+
             content: '';
+
             position: absolute;
+
             inset: 0;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
+
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.45);
+
             pointer-events: none;
+
         }
+
+        video {
+
+            width: 100%;
+
+            max-height: 80vh;
+
+            object-fit: contain;
+
+            background: black;
+
+            display: block;
+
+        }
+
     </style>
+
 </head>
+
 <body>
+
     <div class="mesh-bg"></div>
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 glass border-b border-white/5 bg-slate-950/20 px-6 py-4 flex justify-between items-center rounded-b-3xl">
+    <!-- NAVBAR -->
+
+    <nav
+        class="sticky top-0 z-50 glass border-b border-white/5 bg-slate-950/20 px-6 py-4 flex justify-between items-center rounded-b-3xl">
+
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-blue-600 rounded-lg rotate-12 flex items-center justify-center font-black italic shadow-lg shadow-blue-900/40">E</div>
-            <span class="text-xl font-extrabold tracking-tighter italic">EDITOR<span class="text-blue-500">CONNECT</span></span>
+
+            <div
+                class="w-8 h-8 bg-blue-600 rounded-lg rotate-12 flex items-center justify-center font-black italic shadow-lg shadow-blue-900/40">
+
+                E
+
+            </div>
+
+            <span class="text-xl font-extrabold tracking-tighter italic">
+
+                EDITOR<span class="text-blue-500">CONNECT</span>
+
+            </span>
+
         </div>
-        <button onclick="toggleUpload()" class="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 shadow-lg shadow-blue-900/20">
+
+        <button
+            onclick="toggleUpload()"
+            class="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-xl text-sm md:text-base font-bold transition active:scale-95 shadow-lg shadow-blue-900/20">
+
             + Upload
+
         </button>
+
     </nav>
 
-    <!-- Header Section -->
+    <!-- HERO -->
+
     <header class="pt-20 pb-10 px-6 text-center">
-        <h2 class="text-4xl md:text-6xl font-black mb-4 tracking-tight leading-tight animate__animated animate__fadeInDown">
-            Elite Video <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Editor Hub</span>
+
+        <h2
+            class="text-3xl sm:text-4xl md:text-6xl font-black mb-4 tracking-tight leading-tight animate__animated animate__fadeInDown">
+
+            Elite Video
+
+            <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+
+                Editor Hub
+
+            </span>
+
         </h2>
-        <p class="text-slate-400 text-lg max-w-xl mx-auto animate__animated animate__fadeInUp">Upload your best work and get hired by premium clients instantly.</p>
+
+        <p
+            class="text-slate-400 text-lg max-w-xl mx-auto animate__animated animate__fadeInUp">
+
+            Upload your best work and get hired by premium clients instantly.
+
+        </p>
+
     </header>
 
-    <!-- Filter Navigation -->
-    <div class="flex flex-wrap justify-center gap-3 px-6 mb-12 animate__animated animate__fadeIn">
-        <button onclick="filterItems('all')" class="filter-btn active px-6 py-2 rounded-xl text-sm font-bold">All Edits</button>
-        <button onclick="filterItems('gaming')" class="filter-btn px-6 py-2 rounded-xl text-sm font-bold">Gaming</button>
-        <button onclick="filterItems('anime')" class="filter-btn px-6 py-2 rounded-xl text-sm font-bold">Anime</button>
-        <button onclick="filterItems('cinematic')" class="filter-btn px-6 py-2 rounded-xl text-sm font-bold">Cinematic</button>
+    <!-- FILTERS -->
+
+    <div
+        class="flex flex-wrap justify-center gap-3 px-6 mb-12 animate__animated animate__fadeIn">
+
+        <button
+            onclick="filterItems('all', event)"
+            class="filter-btn active px-6 py-2 rounded-xl text-sm font-bold">
+
+            All Edits
+
+        </button>
+
+        <button
+            onclick="filterItems('gaming', event)"
+            class="filter-btn px-6 py-2 rounded-xl text-sm font-bold">
+
+            Gaming
+
+        </button>
+
+        <button
+            onclick="filterItems('anime', event)"
+            class="filter-btn px-6 py-2 rounded-xl text-sm font-bold">
+
+            Anime
+
+        </button>
+
+        <button
+            onclick="filterItems('cinematic', event)"
+            class="filter-btn px-6 py-2 rounded-xl text-sm font-bold">
+
+            Cinematic
+
+        </button>
+
     </div>
 
-    <!-- Upload Panel -->
-    <section id="uploadPanel" class="max-w-xl mx-auto px-6 hidden mb-12">
-        <div class="glass p-8 rounded-[2rem] animate__animated animate__zoomIn">
-            <h3 class="text-xl font-bold mb-6">Publish Your Portfolio</h3>
+    <!-- UPLOAD PANEL -->
+
+    <section id="uploadPanel"
+        class="max-w-xl mx-auto px-6 hidden mb-12">
+
+        <div
+            class="glass p-8 rounded-[2rem] animate__animated animate__zoomIn">
+
+            <h3 class="text-xl font-bold mb-6">
+
+                Publish Your Portfolio
+
+            </h3>
+
             <div class="space-y-4">
-                <input type="text" id="upName" placeholder="Your Artist Name" class="w-full p-4 rounded-2xl outline-none focus:border-blue-500 transition">
-                <select id="upCat" class="w-full p-4 rounded-2xl outline-none">
+
+                <input
+                    type="text"
+                    id="upTitle"
+                    placeholder="Video Title"
+                    class="w-full p-4 rounded-2xl outline-none">
+
+                <input
+                    type="text"
+                    id="upName"
+                    placeholder="Your Artist Name"
+                    class="w-full p-4 rounded-2xl outline-none">
+
+                <input
+                    type="text"
+                    id="upInsta"
+                    placeholder="Instagram Username"
+                    class="w-full p-4 rounded-2xl outline-none">
+
+                <select
+                    id="upCat"
+                    class="w-full p-4 rounded-2xl outline-none">
+
                     <option value="gaming">Gaming Montage</option>
+
                     <option value="anime">Anime / AMV</option>
+
                     <option value="cinematic">Cinematic Reel</option>
+
                 </select>
-                <div class="border-2 border-dashed border-white/10 rounded-2xl p-10 text-center hover:border-blue-500/50 transition cursor-pointer bg-black/20">
-                    <span class="text-slate-500 font-medium">Select Video File</span>
-                </div>
-                <button onclick="simulateUpload()" class="w-full py-4 bg-white text-black font-black rounded-2xl hover:bg-blue-50 transition active:scale-95">POST WORK</button>
+
+                <!-- PROFILE BUTTON -->
+
+                <button
+                    id="pfp_widget"
+                    class="w-full py-4 border border-white/10 rounded-2xl bg-black/20 hover:border-blue-500/50 transition">
+
+                    Upload Profile Picture
+
+                </button>
+
+                <!-- VIDEO BUTTON -->
+
+                <button
+                    id="upload_widget"
+                    class="w-full py-10 border-2 border-dashed border-white/10 rounded-2xl text-slate-500 font-medium hover:border-blue-500/50 transition bg-black/20">
+
+                    Step 1: Upload Video File
+
+                </button>
+
+                <!-- POST -->
+
+                <button
+                    onclick="publishWork()"
+                    class="w-full py-4 bg-white text-black font-black rounded-2xl hover:bg-blue-50 transition active:scale-95">
+
+                    Step 2: POST WORK
+
+                </button>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- Video Grid -->
-    <main class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32" id="feed">
-        
-        <!-- Example Gaming Card -->
-        <div class="video-card gaming glass rounded-[2.5rem] overflow-hidden group animate__animated animate__fadeInUp">
-            <div class="relative aspect-video video-container">
-                <video class="w-full h-full object-cover" src="https://www.w3schools.com/html/mov_bbb.mp4" loop muted onmouseover="this.play()" onmouseout="this.pause()"></video>
-                <div class="absolute top-5 left-5 bg-blue-600/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Gaming</div>
-            </div>
-            <div class="p-7">
-                <h4 class="text-xl font-bold mb-1">Neon Drift Montage</h4>
-                <p class="text-slate-500 text-sm mb-6 font-medium">@SatvikEdits</p>
-                <div class="flex justify-between items-center">
-                    <button onclick="like(this)" class="flex items-center gap-2 text-slate-400 hover:text-pink-500 transition">
-                        <span class="text-xl">🔥</span> <span class="font-bold">42</span>
-                    </button>
-                    <button onclick="openHire('SatvikEdits')" class="text-blue-400 font-black text-sm hover:underline">Hire Now →</button>
-                </div>
-            </div>
-        </div>
+    <!-- FEED -->
 
-        <!-- Example Anime Card -->
-        <div class="video-card anime glass rounded-[2.5rem] overflow-hidden group animate__animated animate__fadeInUp animate__delay-1s">
-            <div class="relative aspect-video video-container">
-                <video class="w-full h-full object-cover" src="https://www.w3schools.com/html/movie.mp4" loop muted onmouseover="this.play()" onmouseout="this.pause()"></video>
-                <div class="absolute top-5 left-5 bg-purple-600/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Anime</div>
-            </div>
-            <div class="p-7">
-                <h4 class="text-xl font-bold mb-1">Gojo: Infinite Void</h4>
-                <p class="text-slate-500 text-sm mb-6 font-medium">@VisualX</p>
-                <div class="flex justify-between items-center">
-                    <button onclick="like(this)" class="flex items-center gap-2 text-slate-400 hover:text-pink-500 transition">
-                        <span class="text-xl">🔥</span> <span class="font-bold">89</span>
-                    </button>
-                    <button onclick="openHire('VisualX')" class="text-blue-400 font-black text-sm hover:underline">Hire Now →</button>
+    <main
+        id="feed"
+        class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32">
+
+        <!-- DEMO CARD -->
+
+        <div
+            class="video-card gaming glass rounded-3xl overflow-hidden group animate__animated animate__fadeInUp">
+
+            <div class="relative video-container overflow-hidden bg-black">
+
+                <video
+                    src="https://www.w3schools.com/html/mov_bbb.mp4"
+                    autoplay
+                    muted
+                    loop
+                    controls>
+                </video>
+
+                <div
+                    class="absolute top-4 left-4 bg-blue-600/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">
+
+                    Gaming
+
                 </div>
+
             </div>
+
+            <div class="p-6">
+
+                <div class="flex items-center gap-3 mb-5">
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=Satvik"
+                        class="w-12 h-12 rounded-full object-cover border border-white/10">
+
+                    <div>
+
+                        <p class="font-bold text-sm">
+
+                            @satvik
+
+                        </p>
+
+                        <p class="text-xs text-slate-500">
+
+                            Professional Editor
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <h4 class="text-xl font-black mb-5 leading-tight">
+
+                    Demo Edit
+
+                </h4>
+
+                <div class="flex justify-between items-center">
+
+                    <button
+                        class="flex items-center gap-2 text-pink-500">
+
+                        <span class="text-xl">🔥</span>
+
+                        <span class="font-bold">25</span>
+
+                    </button>
+
+                    <a
+                        href="https://instagram.com"
+                        target="_blank"
+                        class="text-blue-400 font-black text-sm hover:underline">
+
+                        Hire Now →
+
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
     </main>
 
-    <!-- Hire Modal -->
-    <div id="hireModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center px-6">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-md" onclick="closeHire()"></div>
-        <div class="modal-content glass p-10 rounded-[3rem] w-full max-w-xs relative z-10 text-center animate__animated animate__zoomIn">
-            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center text-3xl shadow-2xl">👤</div>
-            <h2 id="targetName" class="text-3xl font-black mb-1 italic">Editor Name</h2>
-            <p class="text-slate-400 mb-8 text-sm font-bold uppercase tracking-widest">Available for Hire</p>
-            <div class="space-y-3">
-                <button class="w-full py-4 bg-white text-black font-black rounded-2xl active:scale-95 transition">DM ON INSTAGRAM</button>
-                <button class="w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold">DISCORD SERVER</button>
-            </div>
-            <button onclick="closeHire()" class="mt-8 text-slate-500 text-xs font-black uppercase hover:text-white transition">Back to feed</button>
-        </div>
-    </div>
+    <!-- SCRIPT -->
 
     <script>
+
+        let lastUploadedUrl = "";
+
+        let profilePicUrl = "";
+
+        // TOGGLE UPLOAD PANEL
+
         function toggleUpload() {
-            const panel = document.getElementById('uploadPanel');
+
+            const panel =
+                document.getElementById('uploadPanel');
+
             panel.classList.toggle('hidden');
-            window.scrollTo({top: 0, behavior: 'smooth'});
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
         }
 
-        function filterItems(cat) {
-            const cards = document.querySelectorAll('.video-card');
-            const btns = document.querySelectorAll('.filter-btn');
-            
-            btns.forEach(b => b.classList.remove('active'));
+        // FILTER SYSTEM
+
+        function filterItems(cat, event) {
+
+            const cards =
+                document.querySelectorAll('.video-card');
+
+            const btns =
+                document.querySelectorAll('.filter-btn');
+
+            btns.forEach(btn =>
+                btn.classList.remove('active')
+            );
+
             event.target.classList.add('active');
 
             cards.forEach(card => {
-                if (cat === 'all' || card.classList.contains(cat)) {
+
+                if (
+                    cat === 'all' ||
+                    card.classList.contains(cat)
+                ) {
+
                     card.style.display = 'block';
+
                 } else {
+
                     card.style.display = 'none';
+
                 }
+
             });
+
         }
 
-        function openHire(name) {
-            document.getElementById('targetName').innerText = name;
-            document.getElementById('hireModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+        // VIDEO UPLOAD
+
+        var myWidget =
+            cloudinary.createUploadWidget({
+
+                cloudName: 'dybbv2mhe',
+
+                uploadPreset: 'editorconnect',
+
+                sources: ['local', 'camera'],
+
+                multiple: false,
+
+                resourceType: 'video'
+
+            }, (error, result) => {
+
+                if (
+                    !error &&
+                    result &&
+                    result.event === "success"
+                ) {
+
+                    lastUploadedUrl =
+                        result.info.secure_url;
+
+                    document.getElementById('upload_widget')
+                        .innerText = "✅ Video Uploaded";
+
+                    document.getElementById('upload_widget')
+                        .classList.add('text-green-500');
+
+                }
+
+            });
+
+        // PROFILE UPLOAD
+
+        var pfpWidget =
+            cloudinary.createUploadWidget({
+
+                cloudName: 'dybbv2mhe',
+
+                uploadPreset: 'editorconnect',
+
+                sources: ['local', 'camera'],
+
+                multiple: false,
+
+                resourceType: 'image'
+
+            }, (error, result) => {
+
+                if (
+                    !error &&
+                    result &&
+                    result.event === "success"
+                ) {
+
+                    profilePicUrl =
+                        result.info.secure_url;
+
+                    document.getElementById('pfp_widget')
+                        .innerText = "✅ Profile Uploaded";
+
+                    document.getElementById('pfp_widget')
+                        .classList.add('text-green-500');
+
+                }
+
+            });
+
+        // OPEN VIDEO WIDGET
+
+        document
+            .getElementById("upload_widget")
+            .addEventListener("click", function () {
+
+                myWidget.open();
+
+            }, false);
+
+        // OPEN PROFILE WIDGET
+
+        document
+            .getElementById("pfp_widget")
+            .addEventListener("click", function () {
+
+                pfpWidget.open();
+
+            }, false);
+
+        // POST WORK
+
+        function publishWork() {
+
+            const title =
+                document.getElementById('upTitle').value;
+
+            const name =
+                document.getElementById('upName').value;
+
+            const insta =
+                document.getElementById('upInsta').value;
+
+            const cat =
+                document.getElementById('upCat').value;
+
+            if (
+                !title ||
+                !name ||
+                !lastUploadedUrl
+            ) {
+
+                alert("Please complete all fields!");
+
+                return;
+
+            }
+
+            if (!profilePicUrl) {
+
+                profilePicUrl =
+                    "https://ui-avatars.com/api/?name=" + name;
+
+            }
+
+            const feed =
+                document.getElementById('feed');
+
+            const newCard = `
+
+            <div class="video-card ${cat} glass rounded-3xl overflow-hidden group animate__animated animate__fadeInUp">
+
+                <div class="relative video-container overflow-hidden bg-black">
+
+                    <video
+                        src="${lastUploadedUrl}"
+                        muted
+                        loop
+                        playsinline
+                        controls
+                        onmouseover="this.play()"
+                        onmouseout="this.pause()"
+                        onclick="this.paused ? this.play() : this.pause()">
+                    </video>
+
+                    <div class="absolute top-4 left-4 bg-blue-600/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">
+
+                        ${cat}
+
+                    </div>
+
+                </div>
+
+                <div class="p-6">
+
+                    <div class="flex items-center gap-3 mb-5">
+
+                        <img
+                            src="${profilePicUrl}"
+                            class="w-12 h-12 rounded-full object-cover border border-white/10">
+
+                        <div>
+
+                            <p class="font-bold text-sm">
+
+                                @${name}
+
+                            </p>
+
+                            <p class="text-xs text-slate-500">
+
+                                Professional Editor
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <h4 class="text-xl font-black mb-5 leading-tight">
+
+                        ${title}
+
+                    </h4>
+
+                    <div class="flex justify-between items-center">
+
+                        <button
+                            onclick="like(this)"
+                            class="flex items-center gap-2 text-slate-400 hover:text-pink-500 transition">
+
+                            <span class="text-xl">🔥</span>
+
+                            <span class="font-bold">0</span>
+
+                        </button>
+
+                        <a
+                            href="https://instagram.com/${insta}"
+                            target="_blank"
+                            class="text-blue-400 font-black text-sm hover:underline">
+
+                            Hire Now →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+
+            feed.insertAdjacentHTML(
+                'afterbegin',
+                newCard
+            );
+
+            // RESET FORM
+
+            lastUploadedUrl = "";
+
+            profilePicUrl = "";
+
+            document.getElementById('upTitle').value = "";
+
+            document.getElementById('upName').value = "";
+
+            document.getElementById('upInsta').value = "";
+
+            document.getElementById('upload_widget')
+                .innerText = "Step 1: Upload Video File";
+
+            document.getElementById('pfp_widget')
+                .innerText = "Upload Profile Picture";
+
+            toggleUpload();
+
+            alert("🔥 Your edit is now live!");
+
         }
 
-        function closeHire() {
-            document.getElementById('hireModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
+        // LIKE BUTTON
 
         function like(btn) {
-            const count = btn.querySelector('.font-bold');
-            count.innerText = parseInt(count.innerText) + 1;
+
+            const count =
+                btn.querySelector('.font-bold');
+
+            count.innerText =
+                parseInt(count.innerText) + 1;
+
             btn.classList.add('text-pink-500');
+
             btn.onclick = null;
+
         }
 
-        function simulateUpload() {
-            alert("Integrating with Firebase... Video will be live shortly!");
-            toggleUpload();
-        }
     </script>
+
 </body>
+
 </html>
