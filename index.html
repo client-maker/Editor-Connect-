@@ -2,33 +2,25 @@
 <html lang="en">
 
 <head>
-
     <meta name="description" content="EditorConnect is a cinematic platform for video editors to showcase edits, build portfolios, and connect with clients.">
 
-<meta name="keywords" content="video editor, editing portfolio, gaming edits, anime edits, cinematic edits, AMV, montage">
+    <meta name="keywords" content="video editor, editing portfolio, gaming edits, anime edits, cinematic edits, AMV, montage">
 
-<meta name="author" content="Satvik">
+    <meta name="author" content="Satvik">
+
     <meta charset="UTF-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>EditorConnect | Elite Glass UI</title>
 
-    <!-- Tailwind -->
-
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Cloudinary -->
 
     <script src="https://upload-widget.cloudinary.com/global/all.js"
         type="text/javascript"></script>
 
-    <!-- Animations -->
-
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
-    <!-- Font -->
 
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
@@ -157,6 +149,214 @@
 
         }
 
+        /* ========================= */
+        /* GLASS BACKGROUND SHAPES   */
+        /* ========================= */
+
+        .floating-shapes {
+
+            position: fixed;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            pointer-events: none;
+
+            z-index: -1;
+
+        }
+
+        .glass-shape {
+
+            position: absolute;
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            background: rgba(255,255,255,0.03);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+
+        }
+
+        /* Circle */
+
+        .shape1 {
+
+            width: 220px;
+
+            height: 220px;
+
+            border-radius: 50%;
+
+            top: 8%;
+
+            left: 4%;
+
+            animation: float1 20s ease-in-out infinite;
+
+        }
+
+        /* Square */
+
+        .shape2 {
+
+            width: 140px;
+
+            height: 140px;
+
+            border-radius: 30px;
+
+            top: 70%;
+
+            left: 10%;
+
+            transform: rotate(25deg);
+
+            animation: float2 25s ease-in-out infinite;
+
+        }
+
+        /* Diamond */
+
+        .shape3 {
+
+            width: 180px;
+
+            height: 180px;
+
+            top: 20%;
+
+            right: 8%;
+
+            transform: rotate(45deg);
+
+            animation: float3 22s ease-in-out infinite;
+
+        }
+
+        /* Small Circle */
+
+        .shape4 {
+
+            width: 80px;
+
+            height: 80px;
+
+            border-radius: 50%;
+
+            top: 55%;
+
+            right: 15%;
+
+            animation: float4 18s ease-in-out infinite;
+
+        }
+
+        /* Glow Orb */
+
+        .shape5 {
+
+            width: 300px;
+
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: rgba(59,130,246,0.04);
+
+            filter: blur(25px);
+
+            top: 30%;
+
+            left: 35%;
+
+            animation: pulseGlow 16s ease-in-out infinite;
+
+        }
+
+        /* Rectangle */
+
+        .shape6 {
+
+            width: 200px;
+
+            height: 100px;
+
+            border-radius: 24px;
+
+            bottom: 12%;
+
+            right: 30%;
+
+            animation: float5 28s ease-in-out infinite;
+
+        }
+
+        @keyframes float1 {
+
+            0%,100% { transform: translateY(0); }
+
+            50% { transform: translateY(-35px); }
+
+        }
+
+        @keyframes float2 {
+
+            0%,100% { transform: rotate(25deg) translateY(0); }
+
+            50% { transform: rotate(25deg) translateY(-40px); }
+
+        }
+
+        @keyframes float3 {
+
+            0%,100% { transform: rotate(45deg) translateY(0); }
+
+            50% { transform: rotate(45deg) translateY(-25px); }
+
+        }
+
+        @keyframes float4 {
+
+            0%,100% { transform: translateY(0); }
+
+            50% { transform: translateY(20px); }
+
+        }
+
+        @keyframes float5 {
+
+            0%,100% { transform: translateY(0); }
+
+            50% { transform: translateY(-30px); }
+
+        }
+
+        @keyframes pulseGlow {
+
+            0%,100% {
+
+                transform: scale(1);
+
+                opacity: 0.7;
+
+            }
+
+            50% {
+
+                transform: scale(1.15);
+
+                opacity: 1;
+
+            }
+
+        }
+
     </style>
 
 </head>
@@ -164,8 +364,22 @@
 <body>
 
     <div class="mesh-bg"></div>
+    
+    <div class="floating-shapes">
 
-    <!-- NAVBAR -->
+        <div class="glass-shape shape1"></div>
+
+        <div class="glass-shape shape2"></div>
+
+        <div class="glass-shape shape3"></div>
+
+        <div class="glass-shape shape4"></div>
+
+        <div class="glass-shape shape5"></div>
+
+        <div class="glass-shape shape6"></div>
+
+    </div>
 
     <nav
         class="sticky top-0 z-50 glass border-b border-white/5 bg-slate-950/20 px-6 py-4 flex justify-between items-center rounded-b-3xl">
@@ -197,8 +411,6 @@
 
     </nav>
 
-    <!-- HERO -->
-
     <header class="pt-20 pb-10 px-6 text-center">
 
         <h2
@@ -223,8 +435,6 @@
         </p>
 
     </header>
-
-    <!-- FILTERS -->
 
     <div
         class="flex flex-wrap justify-center gap-3 px-6 mb-12 animate__animated animate__fadeIn">
@@ -263,8 +473,6 @@
 
     </div>
 
-    <!-- UPLOAD PANEL -->
-
     <section id="uploadPanel"
         class="max-w-xl mx-auto px-6 hidden mb-12">
 
@@ -297,6 +505,37 @@
                     placeholder="Instagram Username"
                     class="w-full p-4 rounded-2xl outline-none">
 
+                <div class="relative w-full">
+
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+
+                    <input 
+                        type="number" 
+                        id="upPrice" 
+                        placeholder="Starting Price (e.g., 45)" 
+                        class="w-full p-4 pl-8 rounded-2xl outline-none" 
+                        min="0">
+
+                </div>
+
+                <select id="upDeliveryTime" class="w-full p-4 rounded-2xl outline-none">
+
+                    <option value="" disabled selected>Estimated Delivery Time</option>
+
+                    <option value="24 Hours">⚡ Express (24 Hours)</option>
+
+                    <option value="2 Days">2 Days Turnaround</option>
+
+                    <option value="3 Days">3 Days Turnaround</option>
+
+                    <option value="5 Days">5 Days Turnaround</option>
+
+                    <option value="1 Week">1 Week Delivery</option>
+
+                    <option value="Flexible">Flexible Turnaround</option>
+
+                </select>
+
                 <select
                     id="upCat"
                     class="w-full p-4 rounded-2xl outline-none">
@@ -309,8 +548,6 @@
 
                 </select>
 
-                <!-- PROFILE BUTTON -->
-
                 <button
                     id="pfp_widget"
                     class="w-full py-4 border border-white/10 rounded-2xl bg-black/20 hover:border-blue-500/50 transition">
@@ -319,8 +556,6 @@
 
                 </button>
 
-                <!-- VIDEO BUTTON -->
-
                 <button
                     id="upload_widget"
                     class="w-full py-10 border-2 border-dashed border-white/10 rounded-2xl text-slate-500 font-medium hover:border-blue-500/50 transition bg-black/20">
@@ -328,8 +563,6 @@
                     Step 1: Upload Video File
 
                 </button>
-
-                <!-- POST -->
 
                 <button
                     onclick="publishWork()"
@@ -345,13 +578,9 @@
 
     </section>
 
-    <!-- FEED -->
-
     <main
         id="feed"
         class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32">
-
-        <!-- DEMO CARD -->
 
         <div
             class="video-card gaming glass rounded-3xl overflow-hidden group animate__animated animate__fadeInUp">
@@ -377,25 +606,37 @@
 
             <div class="p-6">
 
-                <div class="flex items-center gap-3 mb-5">
+                <div class="flex items-center justify-between gap-3 mb-5">
 
-                    <img
-                        src="https://ui-avatars.com/api/?name=Satvik"
-                        class="w-12 h-12 rounded-full object-cover border border-white/10">
+                    <div class="flex items-center gap-3">
 
-                    <div>
+                        <img
+                            src="https://ui-avatars.com/api/?name=Satvik"
+                            class="w-12 h-12 rounded-full object-cover border border-white/10">
 
-                        <p class="font-bold text-sm">
+                        <div>
 
-                            @satvik
+                            <p class="font-bold text-sm">
 
-                        </p>
+                                @testing code
 
-                        <p class="text-xs text-slate-500">
+                            </p>
 
-                            Professional Editor
+                            <p class="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
 
-                        </p>
+                                <span>⏱️</span> 2 Days delivery
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-center">
+
+                        <p class="text-[10px] uppercase text-emerald-400 font-bold tracking-wider leading-none">Starts at</p>
+
+                        <p class="text-emerald-400 font-black text-sm">$45</p>
 
                     </div>
 
@@ -403,29 +644,54 @@
 
                 <h4 class="text-xl font-black mb-5 leading-tight">
 
-                    Demo Edit
+                    Random test video 
 
                 </h4>
 
-                <div class="flex justify-between items-center">
+                <div class="space-y-4">
 
-                    <button
-                        class="flex items-center gap-2 text-pink-500">
+                    <div class="flex justify-between items-center">
 
-                        <span class="text-xl">🔥</span>
+                        <button
+                            onclick="like(this)"
+                            class="flex items-center gap-2 text-slate-400 hover:text-pink-500 transition">
 
-                        <span class="font-bold">25</span>
+                            <span class="text-xl">🔥</span>
 
-                    </button>
+                            <span class="font-bold">0</span>
 
-                    <a
-                        href="https://instagram.com"
-                        target="_blank"
-                        class="text-blue-400 font-black text-sm hover:underline">
+                        </button>
 
-                        Hire Now →
+                        <a
+                            href="https://instagram.com/"
+                            target="_blank"
+                            class="text-blue-400 font-black text-sm hover:underline">
 
-                    </a>
+                            Hire Now →
+
+                        </a>
+
+                    </div>
+
+                    <div class="rating flex gap-1 text-xl">
+
+                        <span onclick="rate(this,1)">⭐</span>
+
+                        <span onclick="rate(this,2)">⭐</span>
+
+                        <span onclick="rate(this,3)">⭐</span>
+
+                        <span onclick="rate(this,4)">⭐</span>
+
+                        <span onclick="rate(this,5)">⭐</span>
+
+                        <span class="ml-2 text-sm text-slate-400 rating-text">
+
+                            No ratings yet
+
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -434,8 +700,6 @@
         </div>
 
     </main>
-
-    <!-- SCRIPT -->
 
     <script>
 
@@ -602,161 +866,22 @@
             const cat =
                 document.getElementById('upCat').value;
 
+            const price = 
+                document.getElementById('upPrice').value;
+
+            const deliveryTime = 
+                document.getElementById('upDeliveryTime').value;
+
             if (
                 !title ||
                 !name ||
                 !lastUploadedUrl
             ) {
 
-                alert("Please complete all fields!");
+                alert("Please complete all required fields!");
 
                 return;
 
             }
 
-            if (!profilePicUrl) {
-
-                profilePicUrl =
-                    "https://ui-avatars.com/api/?name=" + name;
-
-            }
-
-            const feed =
-                document.getElementById('feed');
-
-            const newCard = `
-
-            <div class="video-card ${cat} glass rounded-3xl overflow-hidden group animate__animated animate__fadeInUp">
-
-                <div class="relative video-container overflow-hidden bg-black">
-
-                    <video
-                        src="${lastUploadedUrl}"
-                        muted
-                        loop
-                        playsinline
-                        controls
-                        onmouseover="this.play()"
-                        onmouseout="this.pause()"
-                        onclick="this.paused ? this.play() : this.pause()">
-                    </video>
-
-                    <div class="absolute top-4 left-4 bg-blue-600/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">
-
-                        ${cat}
-
-                    </div>
-
-                </div>
-
-                <div class="p-6">
-
-                    <div class="flex items-center gap-3 mb-5">
-
-                        <img
-                            src="${profilePicUrl}"
-                            class="w-12 h-12 rounded-full object-cover border border-white/10">
-
-                        <div>
-
-                            <p class="font-bold text-sm">
-
-                                @${name}
-
-                            </p>
-
-                            <p class="text-xs text-slate-500">
-
-                                Professional Editor
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <h4 class="text-xl font-black mb-5 leading-tight">
-
-                        ${title}
-
-                    </h4>
-
-                    <div class="flex justify-between items-center">
-
-                        <button
-                            onclick="like(this)"
-                            class="flex items-center gap-2 text-slate-400 hover:text-pink-500 transition">
-
-                            <span class="text-xl">🔥</span>
-
-                            <span class="font-bold">0</span>
-
-                        </button>
-
-                        <a
-                            href="https://instagram.com/${insta}"
-                            target="_blank"
-                            class="text-blue-400 font-black text-sm hover:underline">
-
-                            Hire Now →
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            `;
-
-            feed.insertAdjacentHTML(
-                'afterbegin',
-                newCard
-            );
-
-            // RESET FORM
-
-            lastUploadedUrl = "";
-
-            profilePicUrl = "";
-
-            document.getElementById('upTitle').value = "";
-
-            document.getElementById('upName').value = "";
-
-            document.getElementById('upInsta').value = "";
-
-            document.getElementById('upload_widget')
-                .innerText = "Step 1: Upload Video File";
-
-            document.getElementById('pfp_widget')
-                .innerText = "Upload Profile Picture";
-
-            toggleUpload();
-
-            alert("🔥 Your edit is now live!");
-
-        }
-
-        // LIKE BUTTON
-
-        function like(btn) {
-
-            const count =
-                btn.querySelector('.font-bold');
-
-            count.innerText =
-                parseInt(count.innerText) + 1;
-
-            btn.classList.add('text-pink-500');
-
-            btn.onclick = null;
-
-        }
-
-    </script>
-
-</body>
-
-</html>
+            if (!profilePic) {
