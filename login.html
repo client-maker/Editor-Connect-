@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>EditorConnect Login</title>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+</head>
+
+
+<body>
+
+
+<h1>Login</h1>
+
+
+<input id="email" placeholder="Email">
+
+
+<br><br>
+
+
+<input id="password" type="password" placeholder="Password">
+
+
+<br><br>
+
+
+<button onclick="login()">
+Login
+</button>
+
+
+
+<script>
+
+
+async function login(){
+
+
+const email =
+document.getElementById("email").value;
+
+
+const password =
+document.getElementById("password").value;
+
+
+
+const {data,error} =
+await supabaseClient.auth.signInWithPassword({
+
+email,
+
+password
+
+});
+
+
+
+if(error){
+
+alert(error.message);
+
+}
+
+else{
+
+
+alert("Logged in!");
+
+window.location.href="index.html";
+
+
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
