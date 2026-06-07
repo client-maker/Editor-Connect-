@@ -905,3 +905,20 @@
             }
 
             if (!profilePic) {
+
+                    // Ensure the submit button exists before adding the listener
+    const submitBtn = document.getElementById('submitBtn');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', async () => {
+            const title = document.getElementById('upTitle').value;
+            const name = document.getElementById('upName').value;
+
+            if (!title || !name) {
+                alert("Please fill in your Title and Name!");
+                return;
+            }
+            alert("Success! Your work is being published.");
+            toggleUpload(); 
+        });
+    }
+                
