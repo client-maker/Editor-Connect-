@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>EditorConnect Signup</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+</head>
+
+
+<body>
+
+<h1>Create Account</h1>
+
+
+<input id="email" placeholder="Email">
+
+<br><br>
+
+<input id="password" type="password" placeholder="Password">
+
+<br><br>
+
+<button onclick="signup()">
+Create Account
+</button>
+
+
+<script>
+
+async function signup(){
+
+const email =
+document.getElementById("email").value;
+
+
+const password =
+document.getElementById("password").value;
+
+
+const {data,error} =
+await supabaseClient.auth.signUp({
+
+email: email,
+
+password: password
+
+});
+
+
+if(error){
+
+alert(error.message);
+
+}
+else{
+
+alert("Account created!");
+
+window.location.href="login.html";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
